@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  # This is our Python/Flask worker
+  web-app:
+    build: .             # Why: Tells Docker to use the Dockerfile in THIS folder
+    container_name: flask-app
+    restart: always      # Why: If the server reboots, the app starts automatically
+    expose:
+      - "5000"           # Why: Opens port 5000 ONLY to other containers (private)
+
+  # This is the Nginx 'Bodyguard' (The Professional Touch)
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80"          # Why: Maps the real world (80) to Nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro # Why: Links your config file
+    depends_on:
+      - web-app          # Why: Ensures Nginx doesn't start until the App is ready
