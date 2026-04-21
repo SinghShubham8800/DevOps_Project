@@ -5,6 +5,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app.py .
+# This line is the fix! It copies app.py AND the templates folder
+COPY . .
 
 CMD ["python", "app.py"]
