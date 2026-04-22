@@ -6,7 +6,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 def get_db_connection():
-    # Attempt to connect 5 times with a 2-second delay
+    # This loop gives the database 10 seconds to start up
     for i in range(5):
         try:
             conn = psycopg2.connect(
@@ -17,9 +17,9 @@ def get_db_connection():
             )
             return conn
         except psycopg2.OperationalError:
-            print(f"Database not ready, retrying in 2 seconds... ({i+1}/5)")
+            print(f"Database not ready, retrying... ({i+1}/5)")
             time.sleep(2)
-    raise Exception("Could not connect to database")
+    raise Exception("Could not connect to the database")
 
 @app.route('/')
 def index():
@@ -32,4 +32,7 @@ def index():
         conn.close()
         return render_template('index.html', db_version=db_version)
     except Exception as e:
-        return f"Database Error: {str(e)}", 500
+        return f"Error: {str(e)}", 500
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
