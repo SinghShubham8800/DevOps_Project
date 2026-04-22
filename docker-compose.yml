@@ -1,21 +1,37 @@
 version: '3.8'
 
 services:
-  # This is our Python/Flask worker
-  web-app:
-    build: .             # Why: Tells Docker to use the Dockerfile in THIS folder
-    container_name: flask-app
-    restart: always      # Why: If the server reboots, the app starts automatically
-    expose:
-      - "5000"           # Why: Opens port 5000 ONLY to other containers (private)
+  # The Database "Team Member"
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=myapp
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
-  # This is the Nginx 'Bodyguard' (The Professional Touch)
+  # Your Python/Flask App
+  web-app:
+    build: .
+    container_name: flask-app
+    restart: always
+    expose:
+      - "5000"
+    depends_on:
+      - db  # Tells Docker: Start the DB before starting the App
+
+  # The Nginx Bodyguard
   nginx:
     image: nginx:latest
     container_name: nginx-proxy
     ports:
-      - "80:80"          # Why: Maps the real world (80) to Nginx
+      - "80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro # Why: Links your config file
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
-      - web-app          # Why: Ensures Nginx doesn't start until the App is ready
+      - web-app
+
+volumes:
+  postgres_data: # This keeps your data safe even if containers stop
