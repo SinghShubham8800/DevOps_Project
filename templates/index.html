@@ -1,32 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>DevOps Project</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Command Center | Saurabh Singh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="profile-box">
+                <div class="avatar">SS</div>
+                <h3>Saurabh Singh</h3>
+                <p>DevOps Engineer</p>
+            </div>
+            <nav class="side-nav">
+                <a href="#" class="active"><i class="fas fa-columns"></i> Dashboard</a>
+                <a href="#"><i class="fas fa-server"></i> AWS Nodes</a>
+                <a href="#"><i class="fas fa-code-branch"></i> Git Hub</a>
+            </nav>
+        </aside>
 
-<div class="container">
-    <h1>🚀 DevOps Project</h1>
-    <p>This project demonstrates CI/CD pipeline.</p>
+        <main class="main-body">
+            <header class="top-bar">
+                <div class="brand">
+                    <h1><i class="fas fa-terminal"></i> DevOps Command Center</h1>
+                    <p>AWS EC2 Infrastructure Node: <span class="ip-tag">54.166.21.4</span></p>
+                </div>
+                <div class="status-ribbon">
+                    <span class="pulse-dot"></span>
+                    <strong>SYSTEM HEALTH: RUNNING SUCCESSFULLY</strong>
+                </div>
+            </header>
 
-    <div class="card">
-        <h2>Technologies Used</h2>
-        <ul>
-            <li>Docker</li>
-            <li>GitHub Actions</li>
-            <li>AWS EC2</li>
-        </ul>
+            <div class="dashboard-grid">
+                <section class="card lifecycle-card">
+                    <div class="section-label"><i class="fas fa-route"></i> DEPLOYMENT LIFECYCLE</div>
+                    <div class="workflow">
+                        <div class="node done"><i class="fas fa-cube"></i><span>Build</span></div>
+                        <div class="line done"></div>
+                        <div class="node done"><i class="fab fa-github"></i><span>Push</span></div>
+                        <div class="line active"></div>
+                        <div class="node active"><i class="fab fa-aws"></i><span>Deploy</span></div>
+                        <div class="line"></div>
+                        <div class="node"><i class="fas fa-check-circle"></i><span>Verify</span></div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="section-label"><i class="fas fa-cubes"></i> RESOURCES</div>
+                    <div class="resource-grid">
+                        <div class="res-card"><i class="fab fa-docker"></i><span>Docker</span></div>
+                        <div class="res-card"><i class="fab fa-github"></i><span>GitHub</span></div>
+                        <div class="res-card"><i class="fab fa-aws"></i><span>AWS EC2</span></div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="section-label"><i class="fas fa-database"></i> ENGINE METADATA</div>
+                    <div class="metadata-terminal">
+                        <code>{{ db_version[0] if db_version else "Awaiting Node Response..." }}</code>
+                    </div>
+                </section>
+
+                <section class="card docs-card">
+                    <div class="section-label"><i class="fas fa-book"></i> DOCUMENTATION</div>
+                    <a href="https://github.com/YOUR_USERNAME" class="github-link-btn" target="_blank">
+                        <i class="fab fa-github"></i> Project Repository
+                    </a>
+                    <div class="command-vault">
+                        <small>CORE REBUILD COMMANDS</small>
+                        <code>docker-compose up -d --build</code>
+                        <code>docker ps -a</code>
+                    </div>
+                </section>
+
+                <section class="card toolchain-card">
+                    <div class="section-label"><i class="fas fa-tools"></i> INTEGRATED TOOLCHAIN</div>
+                    <div class="tool-list">
+                        <div class="tool-row">
+                            <i class="fab fa-linux linux-ico"></i>
+                            <div>
+                                <strong>Ubuntu Linux</strong>
+                                <p>The foundational OS providing kernel-level stability for the container stack.</p>
+                            </div>
+                        </div>
+                        <div class="tool-row">
+                            <i class="fab fa-python python-ico"></i>
+                            <div>
+                                <strong>Python Flask</strong>
+                                <p>Robust backend framework processing logic and managing database transactions.</p>
+                            </div>
+                        </div>
+                        <div class="tool-row">
+                            <i class="fab fa-docker docker-ico"></i>
+                            <div>
+                                <strong>Docker Compose</strong>
+                                <p>Automates the deployment of Nginx, Flask, and PostgreSQL as a single unit.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
     </div>
-
-    <div class="card">
-        <h2>Status</h2>
-        <p class="success">Running Successfully ✅</p>
-<p style="color: blue; font-weight: bold; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px;">
-    Database Connection: {{ db_version }}
-</p>
-    </div>
-</div>
-
 </body>
 </html>
